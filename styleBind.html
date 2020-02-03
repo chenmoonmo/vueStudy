@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            color: #fff;
+            line-height: 100px;
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div v-bind:class="{active: isActive}" v-on:click="disappear">点击消失</div>
+        <div v-bind:class="[activeClass]"></div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+    let vm = new Vue({
+        el:'#app',
+        data: {
+            isActive: true,
+            activeClass: 'active',
+        },
+        methods: {
+            disappear: function(){
+                this.isActive = !this.isActive;
+            }
+        }
+    })
+    </script>
+</body>
+</html>
