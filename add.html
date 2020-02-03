@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         <div>数值A: <input type="text" v-model="a"></div>
         <div>数值B: <input type="text" v-model='b' @keyup.enter='add(a,b)'></div>
         <button @click.stop="add(a,b)">计算</button>
-        <div>计算结果:{{sum}}</div>
+        <div v-cloakv>计算结果:{{sum}}</div v>
     </div>
     <script src="./vue.js"></script>
     <script>
