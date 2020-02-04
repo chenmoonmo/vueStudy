@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
         }
+
         .container {
             width: 780px;
             height: 500px;
             margin: 100px auto;
             background-color: blue;
+            overflow: hidden;
         }
+
         .container li {
             list-style: none;
             display: inline-block;
@@ -27,43 +31,66 @@
             line-height: 100px;
             background-color: #ccc;
             border: 1px solid #888;
+            color: #fff;
         }
-        .container img {
+        .container .tab .active {
+            background-color: orange;
+        }
+
+        .tab>div {
             width: 780px;
+            height: 400px;
+            display: none;
+        }
+        .tab img {
+            width: 100%;
+        }
+        .tab .current {
+            display: block;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div id="app">
             <div class="tab">
                 <ul>
-                    <li :key="item.id" v-for="item in fruits">{{item.name}}</li>
+                    <li :key="item.id" :class="currentIndex===index?'active':''" v-for="(item,index) in fruits" v-on:click="show(index)">{{item.name}}</li>
                 </ul>
+                <div :key="item.id" :class="currentIndex===index?'current':''" v-for="(item,index) in fruits">
+                    <img :src="item.url">
+                </div>
             </div>
-            <img :kry="item.id" v-for="item in fruits" :src="item.url" >
         </div>
     </div>
     <script src="./vue.js"></script>
     <script>
         let vm = new Vue({
-            el:'#app',
+            el: '#app',
             data: {
-                fruits : [{
+                currentIndex: 0,
+                fruits: [{
                     id: 1,
                     name: 'apple',
-                    url: './apple.jpeg'
-                },{
-                    id:2,
-                    name:'orange',
-                    url:'./orange.jpg'
-                },{
-                    id:3,
-                    name:'strawberry',
-                    url:'./strawberry.jpg'
+                    url: './apple.jpeg',
+                }, {
+                    id: 2,
+                    name: 'orange',
+                    url: './orange.jpg',
+                }, {
+                    id: 3,
+                    name: 'strawberry',
+                    url: './strawberry.jpg',
                 }]
+            },
+            methods: {
+                show: function (index) {
+                    this.currentIndex = index;
+                }
             }
         })
     </script>
 </body>
+
 </html>
