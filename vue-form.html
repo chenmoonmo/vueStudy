@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app div {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <form action="">
+            <div>
+                <span>姓名：</span>
+                <span>
+                    <input type="text" v-model="uname">
+                </span>
+            </div>
+            <div>
+                <span>性别：</span>
+                <span>
+                    <input type="radio" id="male" value="1" v-model="gender">
+                    <label for="male">男</label>
+                    <input type="radio" id="female"value="2" v-model="gender">
+                    <label for="male">女</label>
+                </span>
+            </div>
+            <div>
+                <span>爱好：</span>
+                <span>
+                    <input type="checkbox" v-model="hobbies" value="1" id="eat">
+                    <label for="eat">吃饭</label>
+                    <input type="checkbox" v-model="hobbies" value="2" id="sleep">
+                    <label for="sleep">睡觉</label>
+                    <input type="checkbox" v-model="hobbies" value="3" id="abuse">
+                    <label for="abuse">打豆豆</label>
+                </span>
+            </div>
+            <div>
+                <span>职业：</span>
+                <span>
+                    <select v-model="occupation">
+                        <option value="0">请选择你的职业</option>
+                        <option value="1">医生</option>
+                        <option value="2">随便1</option>
+                        <option value="3">随便2</option>
+                        <option value="4">随便3</option>
+                    </select>
+                </span>
+            </div>
+            <div>
+                <span>个人简介：</span>
+                <span>
+                    <textarea id="" cols="20" rows="2"></textarea>
+                </span>
+            </div>
+            <div>
+                <button @click.prevent="handle">提交</button>
+            </div>
+        </form>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            uname:'',
+            gender: 0,
+            hobbies: [],
+            occupation: 0
+        },
+        methods: {
+            handle: function(){
+                console.log(this.uname);
+                console.log(this.gender);
+                console.log(this.hobbies.toString());
+                console.log(this.occupation)
+            }
+        }
+    })
+    </script>
+</body>
+</html>
