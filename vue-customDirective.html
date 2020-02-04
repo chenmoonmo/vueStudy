@@ -11,6 +11,7 @@
 <body>
     <div id="app">
         <input type="text" v-focus>
+        <input type="text" v-color="danger">
     </div>
     <script src="vue.js"></script>
     <script>
@@ -18,11 +19,16 @@
             inserted: function (el) {
                 el.focus();
             }
+        });
+        Vue.directive('color',{
+            inserted: function(el,binding) {
+                el.style.backgroundColor = binding.value;
+            }
         })
         let vm = new Vue({
             el: '#app',
             data: {
-
+                danger: 'orange'
             }
         })
     </script>
