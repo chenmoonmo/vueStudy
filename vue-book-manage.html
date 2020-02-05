@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app {
+            width: 800px;
+            margin: 100px auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ccc;
+            padding: 5px 30px;
+        }
+
+        table th {
+            background-color: orange;
+        }
+
+        div input {
+            width: 130px;
+        }
+
+        button {
+            margin-left: 40px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <span>
+                <span>编号：</span><input type="text" v-model="id" :disabled="flag">
+                <span>名称：</span><input type="text" v-model="name">
+                <button @click="add" :disabled="subFlag">添加</button>
+            </span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr :key="item.id" v-for="item in books">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.date}}</td>
+                    <td>
+                        <a href="javascript::" @click.prevent="del(item.id)">删除</a>
+                        <a href="javascript::" @click.prevent="change(item.id)">修改</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                subFlag: false,
+                flag: false,
+                id: '',
+                name: '',
+                books: []
+            },
+            methods: {
+                add: function () {
+                    if (this.flag) {
+                        this.books.some((item) => {
+                            if (item.id === this.id) {
+                                item.name = this.name;
+                                return true;
+                            }
+                        });
+                        this.flag = false;
+                    } else {
+                        let book = {};
+                        book.id = this.id;
+                        book.name = this.name;
+                        book.data = '';
+                        this.books.push(book);
+                    }
+                    this.id = '';
+                    this.name = '';
+                },
+                change: function (id) {
+                    this.flag = true;
+                    console.log(id)
+                    book = this.books.filter(function (item) {
+                        return item.id === id;
+                    });
+                    this.id = book[0].id;
+                    this.name = book[0].name;
+                },
+                del: function (id) {
+                    // let index = this.books.findIndex(function(item){
+                    //     return item.id === id;
+                    // });
+                    // this.books.splice(index,1)
+                    this.books = this.books.filter(function (item) {
+                        return item.id != id;
+                    })
+                }
+            },
+            watch: {
+                name: function(val){
+                    let flag = this.books.some(function(item){
+                        return item.name === val;
+                    });
+                    if(flag){
+                        this.subFlag = true;
+                    } else {
+                        this.subFlag = false;
+                    }
+                }
+            },
+            mounted: function(){
+                let data = [{
+                    id: 1,
+                    name: '三国演义',
+                    date: '2020-02-05',
+                },
+                {
+                    id: 2,
+                    name: '红楼梦',
+                    date: '2020-02-05',
+                },
+                {
+                    id: 3,
+                    name: '水浒传',
+                    date: '2020-02-05',
+                },
+                {
+                    id: 4,
+                    name: '西游记',
+                    date: '2020-02-05',
+                }];
+                this.books = data;
+            }
+        })
+    </script>
+</body>
+</html>
