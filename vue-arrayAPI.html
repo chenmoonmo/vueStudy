@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <span>
+                <ul>
+                    <li v-for="item in fruit">{{item}}</li>
+                </ul>
+                <input type="text" v-model="fname">
+                <button @click="add">添加</button>
+                <button @click="del">删除</button>
+                <button @click="change">替换</button>
+            </span>
+        </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+    let vm = new Vue({
+        el:'#app',
+        data: {
+            fname:'',
+            fruit:['apple','orange','banana']
+        },
+        methods: {
+            add: function() {
+                this.fruit.push(this.fname);
+            },
+            del: function() {
+                this.fruit.pop()
+            },
+            change: function() {
+                this.fruit = this.fruit.filter(function(word){
+                    return word.length > 5;
+                })
+            }
+        }
+    })
+    </script>
+</body>
+</html>
