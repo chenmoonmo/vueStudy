@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 10px auto;
+        }
+
+        .title {
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            background-color: skyblue;
+        }
+
+        .goods {
+            margin: 10px 0;
+        }
+
+        .goods li {
+            list-style: none;
+            border-bottom: 1px solid skyblue;
+            padding-bottom: 10px;
+        }
+
+        .goods li>button {
+            width: 20px;
+            height: 20px;
+            float: right;
+        }
+
+        .number {
+            margin-left: 60px;
+        }
+
+        .number input {
+            width: 50px;
+        }
+
+        .number button {
+            width: 20px;
+        }
+
+        .total {
+            float: right;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            background-color: orange;
+        }
+
+        .total button,
+        .total span {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <my-cart></my-cart>
+        </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        let CartTitle = {
+            props:['uname'],
+            template: `
+            <div class="title">{{uname}}的商品</div>
+            `
+        }
+        let CartList = {
+            props:['list'],
+            template: `
+            <div class="goods">
+                    <ul>
+                        <li v-for="item in list" :key:="item.id">
+                            <span>{{item.name}}</span>
+                            <span class="number">
+                                <button @click="$emit('reduce',item.id)">-</button>
+                                <input type="text" v-model="item.num">
+                                <button @click="$emit('add',item.id)">+</button>
+                            </span>
+                            <button @click="$emit('del',item.id)">X</button>
+                        </li>
+                    </ul>
+                </div>
+            `
+        }
+        let CartTotal = {
+            props:['list'],
+            template: `
+            <div class="total">
+                <button>结算</button>
+                <span>总价:{{total}}</span>
+            </div>
+            `,
+            computed: {
+                total: function(){
+                    let sum = 0;
+                    this.list.forEach(item =>{
+                        sum += item.price * item.num
+                    })
+                    return sum;
+                }
+            }
+        }
+        Vue.component('my-cart', {
+            data: function(){
+                return {
+                    uname: 'SimonLi',
+                    list:[{
+                        id:1,
+                        name: 'iphone8',
+                        price: 1,
+                        num: 1,
+                    },{
+                        id:2,
+                        name: 'iphone9',
+                        price: 1,
+                        num: 1,
+                    },{
+                        id:3,
+                        name: 'iphone10',
+                        price: 1,
+                        num: 1,
+                    },{
+                        id:4,
+                        name: 'iphone11',
+                        price: 1,
+                        num: 1,
+                    }]
+                }
+            },
+            template: `
+            <div class="cart">
+            <cart-title :uname="uname"></cart-title>
+            <cart-list :list="list" @reduce="reduce($event)" @del="del($event)" @add="add($event)"></cart-list>
+            <cart-total :list="list"></cart-total>
+            </div>`,
+            components: {
+                'cart-title': CartTitle,
+                'cart-list': CartList,
+                'cart-total': CartTotal
+            },
+            methods: {
+                del: function(id){
+                    this.list = this.list.filter(function(item){
+                        return item.id != id;
+                    })
+                },
+                reduce: function(id){
+                    this.list.some(function(item){
+                        if(item.id === id && item.num != 0) {
+                            item.num--
+                        }
+                    })
+                },
+                add: function(id){
+                    this.list.some(function(item){
+                        if(item.id === id) {
+                            item.num++;
+                        }
+                    })
+                }
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
