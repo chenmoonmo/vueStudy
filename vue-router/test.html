@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <a href="#/zhuye">主页</a>
+        <a href="#/keji">科技</a>
+        <a href="#/caijing">财经</a>
+        <a href="#/yule">娱乐</a>
+        <component :is="key"></component>
+    </div>
+
+    <script>
+        var componentA = {
+            template: `<div style="color:red">我是A组件</div>`
+        }
+
+        var componentB = {
+            template: `<div style="color:blank"></div>`
+        }
+
+        var componentC = {
+            template: `<div style="color:pink">我是C组件</div>`
+        }
+
+        var app = new Vue({
+            el: '#app',
+            components: {
+                "comA": componentA,
+                "comB": componentB,
+                "comC": componentC
+            },
+            data: {
+                key: 'comB'
+            }
+        })
+
+    </script>
+</body>
+
+</html>
