@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/1">User1</router-link>
+        <router-link to="/user/2">User2</router-link>
+        <router-link to="/user/3">User3</router-link>
+        <router-link to="/login">login</router-link>
+        <router-link to="/login/tab1"></router-link>
+        <router-link to="/login/tab2"></router-link>
+        <router-view></router-view>
+    </div>
+    <script src="./vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        const user = {
+            props: ['uname', 'age','id'],
+            template: `<h1>{{uname}} {{age}} {{id}}component</h1>`
+        }
+
+        const login = {
+            template: `<div>
+                <h1>login component</h1>
+                <hr/>
+                <router-link to="/login/tab1">tab1</router-link>
+                <router-link to="/login/tab2">tab2</router-link>
+                <router-view/>
+                </div>`
+        }
+
+        const tab1 = {
+            template: '<h2>tap1 component</h2>'
+        }
+
+        const tab2 = {
+            template: '<h2>tap2 component</h2>'
+        }
+
+        let router = new VueRouter({
+            routes: [
+                { path: '/', redirect: '/user' },
+                {
+                    path: '/user/:id',
+                    component: user,
+                    props: route => ({ uname: 'simon', age: 19, id: route.params.id })
+                },
+                {
+                    path: '/login',
+                    component: login,
+                    children: [
+                        { path: '/login/tab1', component: tab1 },
+                        { path: '/login/tab2', component: tab2 }
+                    ]
+                }
+            ]
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            router
+        })
+    </script>
+</body>
+
+</html>
