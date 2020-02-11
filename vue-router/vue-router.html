@@ -25,6 +25,7 @@
 
         let router = new VueRouter({
             routes: [
+                {path:'/',redirect:'/user'},
                 {path:'/user',component: user},
                 {path:'/login',component: login}
             ]
