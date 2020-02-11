@@ -10,9 +10,9 @@
 
 <body>
     <div id="app">
-        <router-link to="/user/1">User</router-link>
-        <router-link to="/user/2">User</router-link>
-        <router-link to="/user/3">User</router-link>
+        <router-link to="/user/1">User1</router-link>
+        <router-link to="/user/2">User2</router-link>
+        <router-link to="/user/3">User3</router-link>
         <router-link to="/login">login</router-link>
         <router-link to="/login/tab1"></router-link>
         <router-link to="/login/tab2"></router-link>
@@ -22,7 +22,8 @@
     <script src="./vue-router.js"></script>
     <script>
         const user = {
-            template: `<h1> {{$route.params.id}} component</h1>`
+            props:['id'],
+            template: `<h1>{{id}} component</h1>`
         }
 
         const login = {
@@ -46,7 +47,7 @@
         let router = new VueRouter({
             routes: [
                 { path: '/', redirect: '/user' },
-                { path: '/user/:id', component: user },
+                { path: '/user/:id', component: user,props:true},
                 {
                     path: '/login',
                     component: login,
